@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/xuborong/Library/CloudStorage/OneDrive-HKUSTConnect/Y2F/COMP 2011/Lab/lab1_template",
+      "program": "/Users/xuborong/Library/CloudStorage/OneDrive-HKUSTConnect/Y2F/COMP 2011/Lab/lab1_template/build/Debug/outDebug"
+    }
+  ]
+}
