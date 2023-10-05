@@ -30,7 +30,7 @@ void print_2d_array(const float a[][3], int num_rows, int num_columns)
 
 int main()	
 {
-    float dist[3][3];   // Distances between any pairs of points
+    float dist[3][3];   // Distances between any pairs of points(first point,secondpoint)
     float point[3][2]   // (x, y) coordinates of 3 points
         = { {1.0, 1.0} , {2.0, 2.0} , {4.0, 3.0} };
 

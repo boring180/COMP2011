@@ -3,6 +3,7 @@
  * The i-th row can be addressed as a[N],
  * which represents a 1D array of M elements.
  */
+//In the last file, we are wasting time(half of the distances are duplicated)
 
 float euclidean_distance(const float point_A[], const float point_B[])
 {

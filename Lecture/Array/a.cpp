@@ -25,7 +25,7 @@ int main()
         "technology"
     };
 
-    //print_strings(word, 5);
+    print_strings(word, 5);
     for (int j = 0; j < 5; j++)
         print_string(word[j]);
     cout << endl;
