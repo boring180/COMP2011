@@ -274,10 +274,10 @@ int updateHealthPointsForHitAction(int healthPoints[MAX_NUM_ROBOTS],
             targetPosY = hitterPosY;
             break;
         default:
-            return STATUS_ACTION_WEAPON_NOT_IMPLEMENTED;
+            return STATUS_ACTION_WEAPON_FAIL;
     }
     //Out of bound
-    if(targetPosY >= mapRows || targetPosY < 0 || targetPosX >= mapCols || targetPosX < 0) return STATUS_ACTION_WEAPON_NOT_IMPLEMENTED;
+    if(targetPosY >= mapRows || targetPosY < 0 || targetPosX >= mapCols || targetPosX < 0) return STATUS_ACTION_WEAPON_FAIL;
     //Empty
     if(map[targetPosY][targetPosX] == CHAR_EMPTY)return STATUS_ACTION_WEAPON_FAIL;
     //The sucess case
@@ -353,7 +353,7 @@ int updateHealthPointsForShootAction(int healthPoints[MAX_NUM_ROBOTS],
             while(map[targetPosY][targetPosX] == CHAR_EMPTY);
             break;
         default:
-            return STATUS_ACTION_WEAPON_NOT_IMPLEMENTED;
+            return STATUS_ACTION_WEAPON_FAIL;
     }
     //The sucess case
     targetRobotLetter = map[targetPosY][targetPosX];
@@ -413,7 +413,7 @@ int updateMapForMoveAction(char map[MAX_ROWS][MAX_COLS], const int mapRows, cons
             }
             break;
         default:
-        return STATUS_ACTION_MOVE_NOT_IMPLMENTED;
+        return STATUS_ACTION_MOVE_OUTSIDE_BOUNDARY;
     }
     map[previouslocationY][previouslocationX] = CHAR_EMPTY;
     map[currentlocationY][currentlocationX] = robotLetter;
