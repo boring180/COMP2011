@@ -1,0 +1,8 @@
+1
+A 100
+1 20
+A...................B
+A moves east 19
+A hits east
+A shoots east
+!

@@ -1,0 +1,19 @@
+3
+A 100
+B 100
+C 100
+5 5
+A..B.
+.....
+.C...
+.....
+.....
+A moves east 2
+A shoots east
+B moves west 1
+B hits west
+B moves south 1
+B shoots south
+A moves east 1
+B hits south
+!

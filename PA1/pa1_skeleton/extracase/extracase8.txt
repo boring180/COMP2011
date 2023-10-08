@@ -1,0 +1,13 @@
+2
+A 100
+B 200
+2 2
+A.
+.B
+A moves south 1
+A hits south
+B moves north 1
+B hits north
+A shoots south
+B shoots north
+!

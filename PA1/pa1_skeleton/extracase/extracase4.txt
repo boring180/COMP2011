@@ -1,0 +1,18 @@
+3
+A 100
+B 200
+C 300
+3 1
+A
+B
+C
+A moves south 1
+B moves south 1
+C moves north 1
+A hits south
+B hits south
+C hits north
+A shoots south
+B shoots south
+C shoots north
+!

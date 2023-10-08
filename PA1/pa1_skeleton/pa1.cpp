@@ -221,15 +221,17 @@ void displayHealthPoints(const int healthPoints[MAX_NUM_ROBOTS])
 }
 
 // Extra Helper function: Locate the robot
-void locaterobot(char robotLetter,int& currentlocationY,int& currentlocationX,const char map[MAX_ROWS][MAX_COLS], const int mapRows, const int mapCols)
+bool locaterobot(char robotLetter,int& currentlocationY,int& currentlocationX,const char map[MAX_ROWS][MAX_COLS], const int mapRows, const int mapCols)
 {
     currentlocationY = 0;
     for(;currentlocationY < mapRows;currentlocationY ++){
         currentlocationX = 0;
         for(;currentlocationX < mapCols;currentlocationX ++){
-            if(robotLetter == map[currentlocationY][currentlocationX])return;
+            if(robotLetter == map[currentlocationY][currentlocationX])return 0;
         }
     }
+    return 1;
+    //This indicates the robot is not found
 }
 // TODO:
 // function updateHealthPointsForHitAction: updates the map, healthPoints, and returns the values to the main function after the hit action
@@ -261,7 +263,7 @@ int updateHealthPointsForHitAction(int healthPoints[MAX_NUM_ROBOTS],
     int hitterPosY;
     int targetPosX;
     int targetPosY;
-    locaterobot(robotLetter,hitterPosY,hitterPosX,map,mapRows,mapCols);
+    if(locaterobot(robotLetter,hitterPosY,hitterPosX,map,mapRows,mapCols))return STATUS_ACTION_WEAPON_FAIL;
     switch(directionLetter){
         case DIRECTION_NORTH:
         case DIRECTION_SOUTH:
@@ -321,7 +323,7 @@ int updateHealthPointsForShootAction(int healthPoints[MAX_NUM_ROBOTS],
 {
     int hitterPosX;
     int hitterPosY;
-    locaterobot(robotLetter,hitterPosY,hitterPosX,map,mapRows,mapCols);
+    if(locaterobot(robotLetter,hitterPosY,hitterPosX,map,mapRows,mapCols))return STATUS_ACTION_WEAPON_FAIL;
     int targetPosX = hitterPosX;
     int targetPosY = hitterPosY;
     int shootstep = 0;
@@ -386,7 +388,7 @@ int updateMapForMoveAction(char map[MAX_ROWS][MAX_COLS], const int mapRows, cons
     int currentlocationX;
     int currentlocationY;
     //Search for the location of the robot
-    locaterobot(robotLetter,currentlocationY,currentlocationX,map,mapRows,mapCols);
+    if(locaterobot(robotLetter,currentlocationY,currentlocationX,map,mapRows,mapCols))return STATUS_ACTION_MOVE_OUTSIDE_BOUNDARY;
     //Mark the previous location if move failed
     int previouslocationX = currentlocationX;
     int previouslocationY = currentlocationY;

@@ -1,0 +1,57 @@
+The initial game information:
+Robot A HP=100
+Robot B HP=100
+Robot C HP=100
+A . . B . 
+. . . . . 
+. C . . . 
+. . . . . 
+. . . . . 
+Success: Robot A moves along the direction east by 2 step(s)
+. . A B . 
+. . . . . 
+. C . . . 
+. . . . . 
+. . . . . 
+Success: Robot A shoots B
+Robot B health point is reduced from 100 to 0
+Robot B is being destroyed by A
+. . A . . 
+. . . . . 
+. C . . . 
+. . . . . 
+. . . . . 
+== Health points of alive robots ==
+Robot A HP=100
+Robot C HP=100
+Fail: If robot B moves along the direction west by 1 step(s), it will move outside a boundary, so the position remains unchanged
+. . A . . 
+. . . . . 
+. C . . . 
+. . . . . 
+. . . . . 
+Fail: Robot B cannot hit any target
+== Health points of alive robots ==
+Robot A HP=100
+Robot C HP=100
+Fail: If robot B moves along the direction south by 1 step(s), it will move outside a boundary, so the position remains unchanged
+. . A . . 
+. . . . . 
+. C . . . 
+. . . . . 
+. . . . . 
+Fail: Robot B cannot shoot any target
+== Health points of alive robots ==
+Robot A HP=100
+Robot C HP=100
+Success: Robot A moves along the direction east by 1 step(s)
+. . . A . 
+. . . . . 
+. C . . . 
+. . . . . 
+. . . . . 
+Fail: Robot B cannot hit any target
+== Health points of alive robots ==
+Robot A HP=100
+Robot C HP=100
+=== Game Ended ===

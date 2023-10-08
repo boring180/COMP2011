@@ -1,0 +1,28 @@
+1
+A 100
+20 1
+A
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+B
+A moves south 19
+A hits south
+A shoots south
+!

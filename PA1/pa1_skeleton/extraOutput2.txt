@@ -1,0 +1,25 @@
+The initial game information:
+Robot A HP=100
+Robot B HP=200
+A B 
+Fail: If robot A moves along the direction east by 1 step(s), it will hit another robot along the path, so the position remains unchanged
+A B 
+Fail: If robot B moves along the direction west by 1 step(s), it will hit another robot along the path, so the position remains unchanged
+A B 
+Fail: Robot A cannot hit any target
+== Health points of alive robots ==
+Robot A HP=100
+Robot B HP=200
+Fail: Robot B cannot hit any target
+== Health points of alive robots ==
+Robot A HP=100
+Robot B HP=200
+Fail: Robot A cannot shoot any target
+== Health points of alive robots ==
+Robot A HP=100
+Robot B HP=200
+Fail: Robot B cannot shoot any target
+== Health points of alive robots ==
+Robot A HP=100
+Robot B HP=200
+=== Game Ended ===
