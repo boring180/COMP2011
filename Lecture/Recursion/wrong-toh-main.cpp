@@ -11,3 +11,4 @@ int main()
     	tower_of_hanoi(1, n, 'A', 'B', 'C');
     return 0;
 }
+//NP

@@ -18,3 +18,4 @@ void tower_of_hanoi(int first, int last, char pegA, char pegB, char pegC)
     cout << "move disc " << first 
 	 << " from peg " << pegB << " to peg " << pegC << endl;
 }
+//NP

@@ -6,3 +6,4 @@ int factorial(int n)    /* factorial2.cpp */
         return 1;
     return n * factorial(n-1); // Recursive case
 }
+//NP

@@ -8,3 +8,4 @@ int fibonacci(int n)    /* File: fibonacci.cpp */
 
     return fibonacci(n-1) + fibonacci(n-2);
 }
+//NP

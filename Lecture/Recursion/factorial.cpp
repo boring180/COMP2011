@@ -7,3 +7,4 @@ int factorial(int n)    /* factorial.cpp */
     else                // Recursive case
         return n * factorial(n-1);
 }
+//NP

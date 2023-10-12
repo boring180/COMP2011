@@ -13,3 +13,4 @@ void tower_of_hanoi(int num_discs, char pegA, char pegB, char pegC)
 
     tower_of_hanoi(num_discs-1, pegB, pegA, pegC);
 }
+//NP

@@ -5,3 +5,4 @@ int num_factors(int n, int m) /* File: factor.cpp */
     else
         return 1 + num_factors(n/m, m);
 }
+//NP

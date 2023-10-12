@@ -11,3 +11,4 @@ double power(double x, int n) /* File: power.cpp */
     else
     	return x * power(x, n-1);
 }
+//NP

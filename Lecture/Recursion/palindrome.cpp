@@ -28,3 +28,4 @@ int main(void)
     cout << boolalpha << palindrome(s, 0, strlen(s)-1) << endl;
     return 0;
 }
+//NP

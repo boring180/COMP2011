@@ -18,3 +18,4 @@ int bsearch(const int data[ ], // sorted in ascending order
     else                        // Search the upper half
         return bsearch(data, mid+1, last, value);
 }
+//NP

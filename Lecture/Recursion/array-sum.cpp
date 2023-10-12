@@ -16,3 +16,4 @@ int main()
         cout << array_sum(a, n) << endl;
     return 0;
 }
+//NP

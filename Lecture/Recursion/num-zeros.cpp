@@ -9,3 +9,4 @@ int num_zeros(int n)    /* File: num-zeros.cpp */
     else
         return num_zeros(n/10) + num_zeros(n%10);
 }
+//NP

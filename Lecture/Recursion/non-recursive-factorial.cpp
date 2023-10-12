@@ -8,3 +8,4 @@ int factorial(int n)    /* non-recursive-factorial.cpp */
             result *= j;
     return result;
 }
+//NP
