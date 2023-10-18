@@ -9,7 +9,7 @@ int main()
     int x = -456;
 
     cout << absolute(-234) << endl; // Which absolute function is called?
-    cout << absolute(x) << endl;    // Which absolute function is called?
+    //cout << absolute(x) << endl;    // Which absolute function is called?
 
     return 0;
 }
