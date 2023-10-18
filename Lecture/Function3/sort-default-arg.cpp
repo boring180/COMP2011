@@ -18,3 +18,4 @@ int main()
     sort(a, b, DESCENDING); cout << a << '\t' << b << endl;
     return 0;
 }
+//NP
