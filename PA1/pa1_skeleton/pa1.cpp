@@ -332,7 +332,7 @@ int updateHealthPointsForShootAction(int healthPoints[MAX_NUM_ROBOTS],
         case DIRECTION_SOUTH:
             do
             {
-            targetPosY = (DIRECTION_NORTH == directionLetter)? targetPosX - 1:targetPosY + 1;
+            targetPosY = (DIRECTION_NORTH == directionLetter)? targetPosY - 1:targetPosY + 1;
             shootstep++;
             //Out of bound
             if(targetPosY >= mapRows || targetPosY < 0) return STATUS_ACTION_WEAPON_FAIL;
