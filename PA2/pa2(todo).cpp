@@ -44,7 +44,7 @@ const int LOCATEQUADRANT_NOT_IMPLEMENTED = 0;
 // @return: int
 // The function returns after getting valid values for width, emptyXPos and emptyYPos
 int locateQuadrant(int width, int x, int y)
-{
+{	
 	return (x >= width / 2)? ((y >= width / 2)? 3 : 2) : ((y >= width / 2)? 4 : 1);
 }
 
@@ -83,7 +83,7 @@ void initializePuzzleMap(int width, char puzzleMap[][MAX_WIDTH])
 // Normalize the whole puzzleMap. The space character ' ' will not be changed.
 //
 void normalizePuzzleMap(int width, char puzzleMap[][MAX_WIDTH])
-{
+{	
 	int deCap = 'a' - 'A';
 	int Cap = 'A' - 'a';
 	const char replacechar = 'A';
@@ -137,13 +137,14 @@ void fillPuzzleRecursive(int width,char puzzleMap[][MAX_WIDTH], int tx,
 		// The base case...
 		for(int i = tx;i <= tx + 1;i++)
 			for(int j = ty;j <= ty + 1;j++)
-			{	
-				if( j == y && i == x) continue;
+			{
+				if( i == x && j == y) continue;
 				puzzleMap[i][j] = nextChar;
 			}
-		nextChar++;
+		++nextChar;
 		return;
 	}
+
 	// The general case
 	//
 	// Key idea:
@@ -153,7 +154,7 @@ void fillPuzzleRecursive(int width,char puzzleMap[][MAX_WIDTH], int tx,
 	//    Each Quad MUST have exactly 1 empty space
 	int midpointx = tx + width / 2;
 	int midpointy = ty + width / 2;
-	switch(locateQuadrant(width,x-tx,y-ty))
+	switch(locateQuadrant(width,x,y))
 	{
 		case 1:
 			fillPuzzleRecursive(2,puzzleMap,midpointx-1,midpointy-1,midpointx-1,midpointy-1,nextChar);
@@ -163,7 +164,7 @@ void fillPuzzleRecursive(int width,char puzzleMap[][MAX_WIDTH], int tx,
 			fillPuzzleRecursive(width/2,puzzleMap,tx,midpointy,midpointx-1,midpointy,nextChar);
 			return;
 		case 2:
-			fillPuzzleRecursive(2,puzzleMap,midpointx-1,midpointy-1,midpointx,midpointy-1,nextChar);
+			fillPuzzleRecursive(2,puzzleMap,midpointx-1,midpointy-1,midpointx-1,midpointy,nextChar);
 			fillPuzzleRecursive(width/2,puzzleMap,tx,ty,midpointx-1,midpointy-1,nextChar);
 			fillPuzzleRecursive(width/2,puzzleMap,midpointx,ty,x,y,nextChar);
 			fillPuzzleRecursive(width/2,puzzleMap,midpointx,midpointy,midpointx,midpointy,nextChar);
@@ -177,14 +178,13 @@ void fillPuzzleRecursive(int width,char puzzleMap[][MAX_WIDTH], int tx,
 			fillPuzzleRecursive(width/2,puzzleMap,tx,midpointy,midpointx-1,midpointy,nextChar);
 			return;
 		case 4:
-			fillPuzzleRecursive(2,puzzleMap,midpointx-1,midpointy-1,midpointx-1,midpointy,nextChar);
+			fillPuzzleRecursive(2,puzzleMap,midpointx-1,midpointy-1,midpointx,midpointy-1,nextChar);
 			fillPuzzleRecursive(width/2,puzzleMap,tx,ty,midpointx-1,midpointy-1,nextChar);
 			fillPuzzleRecursive(width/2,puzzleMap,midpointx,ty,midpointx,midpointy-1,nextChar);
 			fillPuzzleRecursive(width/2,puzzleMap,midpointx,midpointy,midpointx,midpointy,nextChar);
 			fillPuzzleRecursive(width/2,puzzleMap,tx,midpointy,x,y,nextChar);
 			return;
 	}
-	return;
 }
 
 // TODO:
