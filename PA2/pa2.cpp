@@ -84,38 +84,38 @@ void initializePuzzleMap(int width, char puzzleMap[][MAX_WIDTH])
 //
 void normalizePuzzleMap(int width, char puzzleMap[][MAX_WIDTH])
 {
-	int deCap = 'a' - 'A';
-	int Cap = 'A' - 'a';
+	const int deCap = 'a' - 'A';
+	const int Cap = 'A' - 'a';
 	const char replacechar = 'A';
 	const int MAXCHAR = (width * width  - 1) / 3;
 	char currentorder[MAXCHAR];
 	int countchar = 0;
-	for(int j = 0;j < width;j++)
+	for(int i = 0;i < width;i++)
 	{
-		for(int i = 0;i < width;i++)
+		for(int j = 0;j < width;j++)
 		{	
 			bool exist = 0;
-			if(puzzleMap[i][j] == ' ')continue;
-			puzzleMap[i][j] += deCap;
+			if(puzzleMap[j][i] == ' ')continue;
+			puzzleMap[j][i] += deCap;
 			for(int k = 0;k < MAXCHAR;k++)
 			{
-				if(puzzleMap[i][j]== currentorder[k])
+				if(puzzleMap[j][i]== currentorder[k])
 				{
 					exist  = 1;
 					break;
 				}
 			}
 			if(exist)continue;
-			currentorder[countchar] = puzzleMap[i][j];
+			currentorder[countchar] = puzzleMap[j][i];
 			countchar++;
 		}
 	}
 	for(int i = 0;i < width;i++)
 		for(int j = 0;j < width;j++)
 		{	
-			if(puzzleMap[i][j] == ' ')continue;
+			if(puzzleMap[j][i] == ' ')continue;
 			for(int k = 0;k < MAXCHAR;k++)
-				if(puzzleMap[i][j] == currentorder[k])puzzleMap[i][j] = replacechar + k;
+				if(puzzleMap[j][i] == currentorder[k])puzzleMap[j][i] = replacechar + k;
 		}
 	return;
 }
@@ -251,6 +251,7 @@ int main()
 			<< endl;
 		cout << "Enter the output mode: ";
 		cin >> modeOfOperation;
+		cout << endl;
 	} while (modeOfOperation < 0 || modeOfOperation > 3);
 
 	if (modeOfOperation == 0)
