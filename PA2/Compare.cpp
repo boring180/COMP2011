@@ -15,7 +15,7 @@
 	Output:
 
 	  The empty cell (x,y) remains empty
-	  All other cells are filled by non-overlapping L-shape block
+	  All other cells are filled by non-overlapping L-shape blocks
 
 	Output mode:
 	  (0) Console output without normalization
@@ -45,7 +45,9 @@ const int LOCATEQUADRANT_NOT_IMPLEMENTED = 0;
 // The function returns after getting valid values for width, emptyXPos and emptyYPos
 int locateQuadrant(int width, int x, int y)
 {
-	return (x >= width / 2)? ((y >= width / 2)? 3 : 2) : ((y >= width / 2)? 4 : 1);
+
+	// remove this line to start your work
+	return LOCATEQUADRANT_NOT_IMPLEMENTED;
 }
 
 /**
@@ -84,39 +86,7 @@ void initializePuzzleMap(int width, char puzzleMap[][MAX_WIDTH])
 //
 void normalizePuzzleMap(int width, char puzzleMap[][MAX_WIDTH])
 {
-	const int deCap = 'a' - 'A';
-	const int Cap = 'A' - 'a';
-	const char replacechar = 'A';
-	const int MAXCHAR = (width * width  - 1) / 3;
-	char currentorder[MAXCHAR];
-	int countchar = 0;
-	for(int i = 0;i < width;i++)
-	{
-		for(int j = 0;j < width;j++)
-		{	
-			bool exist = 0;
-			if(puzzleMap[j][i] == ' ')continue;
-			puzzleMap[j][i] += deCap;
-			for(int k = 0;k < MAXCHAR;k++)
-			{
-				if(puzzleMap[j][i]== currentorder[k])
-				{
-					exist  = 1;
-					break;
-				}
-			}
-			if(exist)continue;
-			currentorder[countchar] = puzzleMap[j][i];
-			countchar++;
-		}
-	}
-	for(int i = 0;i < width;i++)
-		for(int j = 0;j < width;j++)
-		{	
-			if(puzzleMap[j][i] == ' ')continue;
-			for(int k = 0;k < MAXCHAR;k++)
-				if(puzzleMap[j][i] == currentorder[k])puzzleMap[j][i] = replacechar + k;
-		}
+
 	return;
 }
 
@@ -125,8 +95,8 @@ void normalizePuzzleMap(int width, char puzzleMap[][MAX_WIDTH])
 // The recursive function to fill up the character array: puzzleMap
 // You need to figure out the parameters of the fillPuzzleRecursive function by yourself
 //
-void fillPuzzleRecursive(int width,char puzzleMap[][MAX_WIDTH], int tx,
-						 int ty, int x, int y, char &nextChar)
+void fillPuzzleRecursive(__ width, __ puzzleMap[][MAX_WIDTH], __ tx,
+						 __ ty, __ x, __ y, __ &nextChar)
 {
 	// tx: top Left X coordinate
 	// ty: top Left Y coordinate
@@ -135,15 +105,8 @@ void fillPuzzleRecursive(int width,char puzzleMap[][MAX_WIDTH], int tx,
 	if (width == 2)
 	{
 		// The base case...
-		for(int i = tx;i <= tx + 1;i++)
-			for(int j = ty;j <= ty + 1;j++)
-			{	
-				if( j == y && i == x) continue;
-				puzzleMap[i][j] = nextChar;
-			}
-		nextChar++;
-		return;
 	}
+
 	// The general case
 	//
 	// Key idea:
@@ -151,39 +114,7 @@ void fillPuzzleRecursive(int width,char puzzleMap[][MAX_WIDTH], int tx,
 	// As a result:
 	//    A L-shape MUST be created at the center of the bigger rectangle
 	//    Each Quad MUST have exactly 1 empty space
-	int midpointx = tx + width / 2;
-	int midpointy = ty + width / 2;
-	switch(locateQuadrant(width,x-tx,y-ty))
-	{
-		case 1:
-			fillPuzzleRecursive(2,puzzleMap,midpointx-1,midpointy-1,midpointx-1,midpointy-1,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,tx,ty,x,y,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,midpointx,ty,midpointx,midpointy-1,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,midpointx,midpointy,midpointx,midpointy,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,tx,midpointy,midpointx-1,midpointy,nextChar);
-			return;
-		case 2:
-			fillPuzzleRecursive(2,puzzleMap,midpointx-1,midpointy-1,midpointx,midpointy-1,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,tx,ty,midpointx-1,midpointy-1,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,midpointx,ty,x,y,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,midpointx,midpointy,midpointx,midpointy,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,tx,midpointy,midpointx-1,midpointy,nextChar);
-			return;
-		case 3:
-			fillPuzzleRecursive(2,puzzleMap,midpointx-1,midpointy-1,midpointx,midpointy,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,tx,ty,midpointx-1,midpointy-1,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,midpointx,ty,midpointx,midpointy-1,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,midpointx,midpointy,x,y,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,tx,midpointy,midpointx-1,midpointy,nextChar);
-			return;
-		case 4:
-			fillPuzzleRecursive(2,puzzleMap,midpointx-1,midpointy-1,midpointx-1,midpointy,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,tx,ty,midpointx-1,midpointy-1,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,midpointx,ty,midpointx,midpointy-1,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,midpointx,midpointy,midpointx,midpointy,nextChar);
-			fillPuzzleRecursive(width/2,puzzleMap,tx,midpointy,x,y,nextChar);
-			return;
-	}
+
 	return;
 }
 
@@ -204,24 +135,14 @@ void fillPuzzleRecursive(int width,char puzzleMap[][MAX_WIDTH], int tx,
 // The function returns after getting valid values for width, emptyXPos and emptyYPos
 void checkInput(int &width, int &emptyXPos, int &emptyYPos)
 {
-	do
-	{
-		cout << "Enter the width/height of the puzzle (2, 4, 8): "<< endl;
-		cin>>width;
-	}
-	while(width != 2 && width != 4 && width != 8);
-	do
-	{
-		cout << "Enter the x-coordinate of the empty cell (0-" << width - 1 << "): "<< endl;
-		cin>>emptyXPos;
-	}
-	while(emptyXPos < 0 || emptyXPos > width - 1);
-	do
-	{
-		cout << "Enter the y-coordinate of the empty cell (0-" << width - 1 << "): "<< endl;
-		cin>>emptyYPos;
-	}
-	while(emptyYPos < 0 || emptyYPos > width - 1);
+	// Some helper lines for you to use:
+	cout << "Enter the width/height of the puzzle (2, 4, 8): ";
+	cout << endl;
+	cout << "Enter the x-coordinate of the empty cell (0-" << width - 1 << "): ";
+	cout << endl;
+	cout << "Enter the y-coordinate of the empty cell (0-" << width - 1 << "): ";
+	cout << endl;
+
 	return;
 }
 
