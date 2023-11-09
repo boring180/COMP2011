@@ -13,37 +13,30 @@ const int MAX_LEN = 256;
 
 bool correct_word(char word[],int start,int end)
 {
-   int mid = start;
-   int count = 0;
-   while(mid < MAX_LEN)
-   {  
-         if(word[mid] - 'a' >= 0 && 'z' - word[mid] >= 0)
-         {
-            count++;
-            if(count == 2)break;
-         }
-         mid++;
-   }
-   mid--;
    /* ADD YOUR CODE HERE */
    /* THIS MUST BE A RECURSIVE FUNCTION */
    //cout << start <<' '<< end << endl;
     // Task 1: Base case with only a single character
    if(start==end)return (word[start] - 'a' >= 0 && 'z' - word[start] >= 0);
+   for(int i = start;word[start] - 'a' < 0 || 'z' - word[start] < 0;i++)if(i > end)return false;
     // Task 2: Recursive case with suffix characters '@', or '#'
    if(word[end] == '@' || word[end] == '#')return correct_word(word,start,end-1);
     // Task 3: Recursive case with concatenation characters '|' at suffix position.
    if(word[end]== '|')
-   {  
-      return correct_word(word,start,mid) && correct_word(word,mid+1,end-1);
+   {
+      end--;
    }
     // Task 4: Recursive case with concatenation characters '#' at prefix position.
-   if(word[start] == '#')
+   else if(word[start] == '#')
    {
-      return correct_word(word,start+1,mid) && correct_word(word,mid+1,end);
+      start++;
    }
+   for(int i = start;i<=end;i++)
+      {
+         if(correct_word(word,start,i) && correct_word(word,i+1,end))return true;
+      }
     // All remaining cases are wrong
-    return false;
+   return false;
 }
 
 
