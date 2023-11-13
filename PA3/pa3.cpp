@@ -156,9 +156,27 @@ bool search_course(Course **&course_array, const unsigned int course_id,
 // @param: an unsigned integer representing the number of courses until now.
 bool add_course(Course **&course_array, const unsigned int course_id,
                 const char name[MAX_TITLE], unsigned int &num_courses) {
-  // TODO: Write code to implement add_course
-  cout << "increase course array size to " << num_courses << endl;
-  return false;
+  //Special case: same course
+  int index = 0;
+  if(search_course(course_array,course_id,num_courses,index))return false;
+
+  //Special case: No enough space for the courses
+  if(course_array[num_courses] != nullptr)
+  {
+    Course **updated_course_array = dynamic_init_course_array(num_courses * 2);
+    for(int i = 0;course_array[i] != nullptr && i < num_courses;i++)updated_course_array[i] = course_array[i];
+    delete [] course_array;
+    course_array = updated_course_array;
+    num_courses *= 2;
+    cout << "increase course array size to " << num_courses << endl;
+  }
+
+  //General case
+  Course *Toadd = create_course(course_id,name);
+  index = 0;
+  while(course_array[index] != nullptr)index++;
+  course_array[index] = Toadd;
+  return true;
 }
 
 //Adds the star ranking of a student for a course.
@@ -194,7 +212,7 @@ bool add_star_rank(Student *&student_head, unsigned int sid,
 //Otherwise, add the student (maintaining the increasing order) and return true. A new student always has ranks_count = 0.
 bool add_student(Student *&student_head, const unsigned int sid,
                  const char name[MAX_TITLE]) {
-  // TODO: Write code to implem90ent add_student
+  // TODO: Write code to implement add_student
   //Create the nodes
   Student *toadd = create_student(sid,name);
   Student *grat = nullptr;
@@ -353,7 +371,22 @@ void display_star_ranks(Course **course_array, const unsigned int num_courses,
 void display_courses(Course **course_array, const unsigned int num_courses) {
   // TODO: Write the code to display students
   // If there is no course in the list, use the following cout:
-  cout << "No course in the list " << endl;
+  return;
+  if(course_array[0] == nullptr)
+  {
+    cout << "No course in the list " << endl;
+    return;
+  }
+  for(int i = 0;course_array[i] != nullptr && i < num_courses;i++)
+  {
+    cout<<"course_id : "<<course_array[i]->course_id<<", name :"<<course_array[i]->name<<", stars_cout :"<<endl;
+    cout<<"*     "<<course_array[i]->stars_count[0];
+    cout<<"**    "<<course_array[i]->stars_count[1];
+    cout<<"***   "<<course_array[i]->stars_count[2];
+    cout<<"****  "<<course_array[i]->stars_count[3];
+    cout<<"***** "<<course_array[i]->stars_count[4];
+  }
+  return;
 }
 
 // === Region: The main function ===
