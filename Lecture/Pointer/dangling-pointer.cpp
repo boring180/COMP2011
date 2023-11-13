@@ -12,3 +12,4 @@ int main()
     cout << *ip << endl;
     return 0;
 }
+//NP

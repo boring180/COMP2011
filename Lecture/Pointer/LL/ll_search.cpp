@@ -14,3 +14,4 @@ ll_cnode* ll_search(ll_cnode* head, char c)
 
     return nullptr;
 }
+//NP

@@ -18,3 +18,4 @@ int main()   /* To find the length of the sides of a triangle */
     return 0;
 }
 /* g++ -o point-test point-test.cpp point-distance.cpp */
+//NP

@@ -20,3 +20,4 @@ void print_distance(const Point* p1, const Point* p2)
     cout << " and "; print_point(p2);
     cout << " is " << euclidean_distance(p1, p2) << endl;
 }
+//NP

@@ -12,3 +12,4 @@ int main()
     cout << "b = " << b << '\t' << "address of b = " << &b << endl;
     return 0;
 }
+//NP

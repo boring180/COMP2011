@@ -22,3 +22,5 @@ ll_cnode* ll_create(const char s[])
 
     return head; // The WHOLE linked list can be accessed from the head
 }
+
+//NP

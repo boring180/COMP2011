@@ -19,3 +19,4 @@ struct Student_Record
 // Global constants for department names
 const char dept_name[ ][30]
   = {"Computer Science", "Electrical Engineering", "Mathematics"};
+//NP

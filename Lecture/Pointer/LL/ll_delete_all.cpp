@@ -15,3 +15,4 @@ void ll_delete_all(ll_cnode*& head)
     delete head;        // STEP 2: Then delete the current nodes
     head = nullptr;     // STEP 3: To play safe, reset head to nullptr
 }
+//NP

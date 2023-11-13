@@ -37,3 +37,4 @@ void set_student_record(Student_Record* a, const char name[],
     a->dept = dept;
     a->entry = *date;   // struct-struct assignment
 }
+//NP

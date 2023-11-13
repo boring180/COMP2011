@@ -10,7 +10,7 @@ int main()
     *p1 = 5;            // now x1 = 5
     *p2 += 1000;        // now x2 = 1020
     *p1 = *p2;          // now *p1 = *p2 = x1 = x2 = 1020, but p1 != p2
-    p1 = p2;            // now p1 and p2 both point to x2
+    //p1 = p2;            // now p1 and p2 both point to x2
     
     cout << "x1 = " << x1 << '\t' << "&x1 = " << &x1 << endl;
     cout << "x2 = " << x2 << '\t' << "&x2 = " << &x2 << endl;
@@ -19,3 +19,4 @@ int main()
 
     return 0;
 }
+//NP

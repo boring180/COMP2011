@@ -7,3 +7,4 @@ int ll_length(const ll_cnode* head)
         ++length;
     return length;
 }
+//NP

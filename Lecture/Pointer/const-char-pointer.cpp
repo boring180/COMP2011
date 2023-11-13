@@ -16,3 +16,4 @@ int main()
     cout << s2 << endl;
     return 0;
 }
+//NP

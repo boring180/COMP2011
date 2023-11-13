@@ -16,3 +16,4 @@ ll_cnode* ll_search(ll_cnode*, char c);
 void ll_insert(ll_cnode*&, char, unsigned);
 void ll_delete(ll_cnode*&, char);
 void ll_delete_all(ll_cnode*&);
+//NP
