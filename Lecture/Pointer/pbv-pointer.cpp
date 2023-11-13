@@ -22,3 +22,4 @@ int main()
     cout << "a = " << a << "\t\t\tb = " << b << endl;
     return 0;
 }
+//NP

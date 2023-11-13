@@ -19,3 +19,4 @@ int main()  // Create the LL-string "met"
     // Clean up
     delete mp; delete ep; delete tp; return 0;
 }
+//NP

@@ -15,7 +15,7 @@ bool correct_word(char word[],int start,int end)
 {
    /* ADD YOUR CODE HERE */
    /* THIS MUST BE A RECURSIVE FUNCTION */
-   //cout << start <<' '<< end << endl;
+   // cout << start <<' '<< end << endl;
     // Task 1: Base case with only a single character
    if(start==end)return (word[start] - 'a' >= 0 && 'z' - word[start] >= 0);
    for(int i = start;word[start] - 'a' < 0 || 'z' - word[start] < 0;i++)if(i > end)return false;
@@ -31,7 +31,7 @@ bool correct_word(char word[],int start,int end)
    {
       start++;
    }
-   for(int i = start;i<=end;i++)
+   for(int i = start;i<end;i++)
       {
          if(correct_word(word,start,i) && correct_word(word,i+1,end))return true;
       }

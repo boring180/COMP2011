@@ -12,7 +12,7 @@
 Enter your option: 
 Enter the course id: 
 Enter a name: 
-01 is successfully inserted
+0x01 is successfully inserted
 === Menu ===
 1: Display student list
 2: Display courses
@@ -26,7 +26,7 @@ Enter a name:
 Enter your option: 
 Enter the course id: 
 Enter a name: 
-01 is successfully inserted
+0x01 is successfully inserted
 === Menu ===
 1: Display student list
 2: Display courses

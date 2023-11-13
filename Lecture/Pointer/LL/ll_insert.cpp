@@ -30,3 +30,4 @@ void ll_insert(ll_cnode*& head, char c, unsigned n)
     new_cnode->next = p->next; // STEP 3
     p->next = new_cnode;       // STEP 4
 }
+//NP

@@ -6,3 +6,4 @@ void ll_print(const ll_cnode* head)
         cout << p->data;
     cout << endl;
 }
+//NP

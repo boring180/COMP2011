@@ -84,38 +84,30 @@ void initializePuzzleMap(int width, char puzzleMap[][MAX_WIDTH])
 //
 void normalizePuzzleMap(int width, char puzzleMap[][MAX_WIDTH])
 {
-	const int deCap = 'a' - 'A';
-	const int Cap = 'A' - 'a';
-	const char replacechar = 'A';
 	const int MAXCHAR = (width * width  - 1) / 3;
 	char currentorder[MAXCHAR];
 	int countchar = 0;
+	int replacechar = 'A';
+	bool found;
 	for(int i = 0;i < width;i++)
-	{
 		for(int j = 0;j < width;j++)
 		{	
-			bool exist = 0;
 			if(puzzleMap[j][i] == ' ')continue;
-			puzzleMap[j][i] += deCap;
-			for(int k = 0;k < MAXCHAR;k++)
-			{
-				if(puzzleMap[j][i]== currentorder[k])
+			found = 0;
+			for(int k = 0;k < countchar;k++)
+				if(puzzleMap[j][i] == currentorder[k])
 				{
-					exist  = 1;
+					puzzleMap[j][i] = replacechar + k;
+					found = 1;
 					break;
 				}
+			if(!found)
+			{
+				// visualizePuzzleByText(width, puzzleMap);
+				currentorder[countchar] = puzzleMap[j][i];
+				puzzleMap[j][i] = replacechar + countchar;
+				countchar++;
 			}
-			if(exist)continue;
-			currentorder[countchar] = puzzleMap[j][i];
-			countchar++;
-		}
-	}
-	for(int i = 0;i < width;i++)
-		for(int j = 0;j < width;j++)
-		{	
-			if(puzzleMap[j][i] == ' ')continue;
-			for(int k = 0;k < MAXCHAR;k++)
-				if(puzzleMap[j][i] == currentorder[k])puzzleMap[j][i] = replacechar + k;
 		}
 	return;
 }

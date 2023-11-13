@@ -85,7 +85,7 @@ Course **dynamic_init_course_array(const unsigned int num_courses) {
   for (int i = 0; i < num_courses; i++)
     ret[i] = nullptr;
   return ret;
-}
+
 
 // Helper function: search student and return prev, current
 // return true if found an existing entry
@@ -158,6 +158,7 @@ bool add_course(Course **&course_array, const unsigned int course_id,
                 const char name[MAX_TITLE], unsigned int &num_courses) {
   //Special case: same course
   int index = 0;
+    cout<<*course_array;
   if(search_course(course_array,course_id,num_courses,index))return false;
 
   //Special case: No enough space for the courses
@@ -173,9 +174,8 @@ bool add_course(Course **&course_array, const unsigned int course_id,
 
   //General case
   Course *Toadd = create_course(course_id,name);
-  index = 0;
-  while(course_array[index] != nullptr)index++;
-  course_array[index] = Toadd;
+  //while(course_array + index * sizeof(Course) != nullptr)index++;
+  //*course_array = Toadd;
   return true;
 }
 

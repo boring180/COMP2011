@@ -23,3 +23,4 @@ void ll_delete(ll_cnode*& head, char c)
         delete current;      // STEP 3: Free up the memory of the deleted item
     }
 }
+//NP
