@@ -195,17 +195,31 @@ bool add_star_rank(Student *&student_head, unsigned int sid,
 bool add_student(Student *&student_head, const unsigned int sid,
                  const char name[MAX_TITLE]) {
   // TODO: Write code to implem90ent add_student
+  //Create the nodes
   Student *toadd = create_student(sid,name);
+  Student *grat = nullptr;
   Student *prev = nullptr;
-  Student *curr = nullptr;
-  if(!search_student(student_head,sid,prev,curr))return false;
-  if(prev == nullptr)
+  //Special case: The ll is empty
+  if(student_head == nullptr)
   {
-    toadd -> next = student_head;
     student_head = toadd;
+    return true;
   }
-  prev -> next = toadd;
-  toadd -> next = curr;
+  //Special case: The student already exist
+  if(search_student(student_head,sid,prev,grat))return false;
+  //General case
+  for(prev = student_head;prev -> next != nullptr;)
+  {
+    grat =  prev -> next;
+    if(prev -> sid < toadd -> sid && toadd -> sid < grat -> sid)break;
+    /*
+    if(grat -> next != nullptr)break;
+    prev = prev -> next;
+    grat = grat -> next;
+    */
+  }
+  prev -> next = toadd; // The previous student points to the student to add
+  toadd -> next = grat; // The toadd student points to the next pointer
   return true;
 }
 
@@ -295,11 +309,18 @@ void display_students(Student *student_head) {
   cout << "=== Student List ([sid, name, star_rank count]) ===" << endl;
   
   // TODO: Write the code to display students
-  for(Student *Toprint = student_head;Toprint != nullptr;Toprint = Toprint -> next,cout<<" -> ")
+  //Special case: empty list
+  if(student_head == nullptr)
+  {
+    cout << "No items in the Student list" << endl; // Use this when no student exists
+    return;
+  }
+  for(Student *Toprint = student_head;Toprint != nullptr;Toprint = Toprint -> next)
   {
     cout<<"["<<Toprint -> sid<<", "<<Toprint -> name<<", "<<Toprint -> ranks_count<<"]";
+    if(Toprint ->  next != nullptr)cout<<" -> ";
   }
-  cout << "No items in the Student list" << endl; // Use this when no student exists
+  cout << endl;
   return;
 }
 
