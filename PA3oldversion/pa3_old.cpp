@@ -255,7 +255,7 @@ bool add_student(Student *&student_head, const unsigned int sid,
   prev -> next = toadd; // The previous student points to the student to add
   toadd -> next = grat; // The toadd student points to the next pointer
   return true;
-  }
+}
 
 //Removes the star ranking of a student for a course.
 //If the star ranking does not exist, return false.
@@ -374,7 +374,7 @@ void display_students(Student *student_head) {
   }
   cout << endl;
   return;
-  }
+}
 
 //Display star ranks of the course given its id.
 // In the form:
