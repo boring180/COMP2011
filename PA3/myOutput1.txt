@@ -51,6 +51,7 @@ Enter your option:
 8: Delete a course by course id
 9: Exit the system
 Enter your option: 
+No course in the list 
 === Menu ===
 1: Display student list
 2: Display courses
