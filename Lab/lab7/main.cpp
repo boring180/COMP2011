@@ -40,4 +40,6 @@ int main() {
             break;
         }
     } while (reply != 3);
+
+    return 0;
 }
