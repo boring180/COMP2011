@@ -184,7 +184,8 @@ bool add_course(Course **&course_array, const unsigned int course_id,
   if(search_course(course_array,course_id,num_courses,index))return false;
   //Genral case
   Course *Toadd = create_course(course_id,name);
-  course_array[0] = Toadd;
+  for(int index = 0;course_array[index] != nullptr;index++);
+  course_array[index] = Toadd;
   return true;
 }
 
@@ -363,7 +364,7 @@ bool delete_course(Student *student_head, Course **&course_array,
       count ++;
     }
   }
-  if(count <= num_courses / 2)
+  if(count <= num_courses / 2 && num_courses > 2)
   {
     num_courses /= 2;
     cout << "reduce course array size to " << num_courses << endl;
@@ -485,7 +486,7 @@ void display_courses(Course **course_array, const unsigned int num_courses) {
   }
   for(int i = 0;course_array[i] != nullptr && i < num_courses;i++)
   {
-    cout<<"course_id : "<<course_array[i]->course_id<<", name : "<<course_array[i]->name<<", stars_count :"<<endl;
+    cout<<"course_id : "<<course_array[i]->course_id<<", name : "<<course_array[i]->name<<", stars_count : "<<endl;
     cout<<"*     "<<course_array[i]->stars_count[0]<<endl;
     cout<<"**    "<<course_array[i]->stars_count[1]<<endl;
     cout<<"***   "<<course_array[i]->stars_count[2]<<endl;
