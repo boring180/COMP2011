@@ -3,8 +3,8 @@
 //  COMP2011 Fall 2023
 //  PA3: A Simplified Version of USTSPAC
 //
-//  Your name:
-//  Your ITSC email:           @connect.ust.hk
+//  Your name: Borong 
+//  Your ITSC email: bxuar          @connect.ust.hk
 //
 //  Project TA: PAPPAS Christodoulos (cpappas@connect.ust.hk); 
 //              XU Shuangjie (shuangjie.xu@connect.ust.hk)
@@ -230,11 +230,21 @@ bool add_star_rank(Student *&student_head, unsigned int sid,
     return false;
   }
   StarRank *newsta = new StarRank;
+  StarRank *search = course_array[index] -> star_rank_head;
   newsta -> next = nullptr;
   newsta -> star = star;
   newsta -> student = currstu;
-  prevsta -> next = newsta;
-  course_array[index] -> stars_count[star]++;
+  if(search == nullptr)
+  {
+    course_array[index] -> star_rank_head = newsta;
+  }
+  else
+  {
+    for(;newsta -> next != nullptr;newsta = newsta -> next);
+    search -> next = newsta;
+  }
+  course_array[index] -> stars_count[star-1]++;
+  currstu -> ranks_count++;
   return true;
 }
 
@@ -269,7 +279,7 @@ bool add_student(Student *&student_head, const unsigned int sid,
   }
 
 //Removes the star ranking of a student for a course.
-//If the star ranking does not exist, return false.
+//If the star anking does not exist, return false.
 //Else, delete the star ranking, decrease the ranks_count of the student with id sid, and
 // update the new stars_count of the course with id course_id. Finally return true.
 
@@ -364,7 +374,7 @@ bool delete_course(Student *student_head, Course **&course_array,
       count ++;
     }
   }
-  if(count <= num_courses / 2 && num_courses > 2)
+  if(count > num_courses / 2 && num_courses > 2)
   {
     num_courses /= 2;
     cout << "reduce course array size to " << num_courses << endl;
@@ -460,8 +470,8 @@ void display_star_ranks(Course **course_array, const unsigned int num_courses,
   for(;star_rank != nullptr;star_rank = next_rank)
   {
     next_rank = star_rank -> next;
-    cout << "[" << star_rank -> student -> sid<<": ";
-    cout << star_rank -> star << "]";
+    cout << "[" << star_rank -> student -> sid<<": "
+    << star_rank -> star << "]";
     if(next_rank != nullptr)cout << " -> ";
   }
   cout << endl;
