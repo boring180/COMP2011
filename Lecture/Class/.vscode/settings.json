@@ -1,8 +1,4 @@
 {
-  "files.associations": {
-    "iostream": "cpp",
-    "ostream": "cpp"
-  },
   "C_Cpp_Runner.cCompilerPath": "clang",
   "C_Cpp_Runner.cppCompilerPath": "clang++",
   "C_Cpp_Runner.debuggerPath": "lldb",
@@ -37,8 +33,5 @@
     "**/.vscode",
     "**/.vscode/**"
   ],
-  "C_Cpp_Runner.useAddressSanitizer": false,
-  "workbench.preferredDarkColorTheme": "Default High Contrast",
-  "workbench.colorTheme": "Default High Contrast",
-  "workbench.preferredLightColorTheme": "Default High Contrast Light"
+  "C_Cpp_Runner.useAddressSanitizer": false
 }

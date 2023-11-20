@@ -79,6 +79,7 @@ Course *create_course(const unsigned int course_id,
 
 // Given the number of courses, dynamicially creates and initializes the courses
 // list array
+// The dynamic array records the address of the dynamic created courses
 Course **dynamic_init_course_array(const unsigned int num_courses) {
   Course **ret = nullptr;
   ret = new Course *[num_courses];
@@ -90,6 +91,10 @@ Course **dynamic_init_course_array(const unsigned int num_courses) {
 // Helper function: search student and return prev, current
 // return true if found an existing entry
 // return false if an existing entry is not found
+
+//Remark: previous student is defaulted to be a null pointer
+//If it is empty linked list, the previous student will be a null pointer and the function will return false
+//The linked list is in increased SID order, once the SID is greater than the desired, the function will return false
 bool search_student(Student *head, const unsigned int sid, Student *&prev,
                     Student *&current) {
   prev = nullptr;
@@ -109,6 +114,7 @@ bool search_student(Student *head, const unsigned int sid, Student *&prev,
 // Helper function: search star_rank and return prev, current
 // return true if found an existing entry
 // return false if an existing entry is not found
+//If it is a empty linked list, the previous starrank will be a null pointer, and will return false
 bool search_star_rank(StarRank *head, const unsigned int sid, StarRank *&prev,
                     StarRank *&current) {
   prev = nullptr;
@@ -145,12 +151,14 @@ bool search_course(Course **&course_array, const unsigned int course_id,
 }
 
 //Extra helper function: recursively delete all the star ranking of a course
-void clear_star_rank(StarRank *head)
+//This function will only be called when the course is deleted
+void clear_star_rank(StarRank *&head)
 {
   if(head == nullptr)return;
   clear_star_rank(head -> next);
-  delete head -> next;
-  head -> next = nullptr;
+  head -> student -> ranks_count--;//Remember to reduce the star count of the student review
+  delete head;
+  head = nullptr;
 }
 
 // Adds a new course in the courses array of pointers.
@@ -166,12 +174,15 @@ void clear_star_rank(StarRank *head)
 bool add_course(Course **&course_array, const unsigned int course_id,
                 const char name[MAX_TITLE], unsigned int &num_courses) {
   // TODO: Write code to implement add_course
+  //Search the course incase the course if already in the array
+  int index = 0;
+  if(search_course(course_array,course_id,num_courses,index))return false;
   //Increase the size
-  if(course_array[num_courses - 1] != nullptr)
+  if(course_array[num_courses - 1] != nullptr)//Find if the course array is filled up
   {
     num_courses *= 2;
-    Course **updated_course_array=dynamic_init_course_array(num_courses);
-    for(int i = 0;course_array[i] != nullptr;i++)
+    Course **updated_course_array=dynamic_init_course_array(num_courses);//Create a new course array
+    for(int i = 0;course_array[i] != nullptr;i++)//Fill the previous course array into the new course array
     {
       updated_course_array[i] = course_array[i];
     }
@@ -179,12 +190,9 @@ bool add_course(Course **&course_array, const unsigned int course_id,
     course_array = updated_course_array;
     cout << "increase course array size to " << num_courses << endl;
   }
-  //Course found
-  int index = 0;
-  if(search_course(course_array,course_id,num_courses,index))return false;
-  //Genral case
+  //Add the course into the  array
   Course *Toadd = create_course(course_id,name);
-  for(int index = 0;course_array[index] != nullptr;index++);
+  for(index = 0;course_array[index] != nullptr;index++);// Locate the empty space with the smallest index
   course_array[index] = Toadd;
   return true;
 }
@@ -208,6 +216,7 @@ bool add_star_rank(Student *&student_head, unsigned int sid,
                  const unsigned int num_courses, int star) {
   // TODO: Write code to implement add_star_rank
   // use error cout carefully
+  //Find the studnt, in case the student do not exist
   Student *prevstu = nullptr;
   Student *currstu = nullptr;
   if(!search_student(student_head,sid,prevstu,currstu))
@@ -215,12 +224,14 @@ bool add_star_rank(Student *&student_head, unsigned int sid,
     cout << "Failed to find student " << sid << " when add a star_rank." << endl;
     return false;
   }
+  //Find the course, incase the course do not exist
   int index = 0;
   if(!search_course(course_array,course_id,num_courses,index))
   {
     cout << "Failed to find course " << course_id << " when add a star_rank." << endl;
     return false;
   }
+  //Find the starrank, incase the star rank alrady exist
   StarRank *prevsta = nullptr;
   StarRank *currsta = nullptr;
   if(search_star_rank(course_array[index]-> star_rank_head,sid,prevsta,currsta))
@@ -229,20 +240,25 @@ bool add_star_rank(Student *&student_head, unsigned int sid,
     << " already have a star_rank." << endl;
     return false;
   }
+  //Insert the starrank
   StarRank *newsta = new StarRank;
-  StarRank *search = course_array[index] -> star_rank_head;
   newsta -> next = nullptr;
   newsta -> star = star;
   newsta -> student = currstu;
+  //Find where is the last starrank
+  StarRank *search = course_array[index] -> star_rank_head;
+  //Special case: no rank for the coourse yet
   if(search == nullptr)
   {
     course_array[index] -> star_rank_head = newsta;
   }
+  //General case
   else
   {
     for(;newsta -> next != nullptr;newsta = newsta -> next);
     search -> next = newsta;
   }
+  //Increase the star count of the course and the student
   course_array[index] -> stars_count[star-1]++;
   currstu -> ranks_count++;
   return true;
@@ -271,7 +287,7 @@ bool add_student(Student *&student_head, const unsigned int sid,
   for(prev = student_head;prev -> next != nullptr;prev = grat)
   {
     grat =  prev -> next;
-    if(prev -> sid < toadd -> sid && toadd -> sid < grat -> sid)break;
+    if(prev -> sid < toadd -> sid && toadd -> sid < grat -> sid)break;//Find the space between the next and the previous studnet
   }
   prev -> next = toadd; // The previous student points to the student to add
   toadd -> next = grat; // The toadd student points to the next pointer
@@ -294,28 +310,27 @@ bool delete_star_rank(Student *&student_head, Course **&course_array,
                     const unsigned int num_courses) {
   // TODO: Write code to implement delete_star_rank
   // use error cout carefully
-  int index = 0;
-  if(!search_course(course_array,course_id,num_courses,index))
+  //Search the course, if the course does not exist
+  int course_index = 0;
+  if(!search_course(course_array,course_id,num_courses,course_index))
   {
-  cout << "Failed to delete star_rank, course " << course_id << " not found."<< endl;
-  return false;
+    cout << "Failed to delete star_rank, course " << course_id << " not found."<< endl;
+    return false;
   }
   StarRank *prevsta = nullptr;
   StarRank *currsta = nullptr;
-  if(!search_star_rank(course_array[index] -> star_rank_head,sid,prevsta,currsta))
+  //Search the starrank, if the star rank does not exist
+  if(!search_star_rank(course_array[course_index] -> star_rank_head,sid,prevsta,currsta))
   {
-    cout << "Failed to delete star_rank, star_rank not found in course ";
+    cout << "Failed to delete star_rank, star_rank not found in course "<< course_id << endl;
     return false;
   }
-  //Special case: only one star ranking
-  if(prevsta == nullptr)
-  {
-    course_array[index] -> star_rank_head = nullptr;
-  }
-  //General case
-  prevsta -> next = currsta -> next;
+  //Decrease the star count
+  currsta -> student -> ranks_count --;
+  course_array[course_index] -> stars_count[currsta -> star] --;
+  //Delet the starrank
+  prevsta -> next = currsta -> next;//Relink
   delete currsta;
-  currsta = nullptr;
   return true;
 }
 
@@ -343,8 +358,8 @@ bool delete_star_rank(Student *&student_head, Course **&course_array,
 bool delete_course(Student *student_head, Course **&course_array,
                    const unsigned int course_id, unsigned int &num_courses) {
   // TODO: Write code to implement delete_course
-  Course *to_delete = nullptr;
   //Special case: Course does not exist
+  Course *to_delete = nullptr;
   for(int index = 0;index < num_courses;index++)
   {
     if(course_array[index] -> course_id == course_id)
@@ -353,20 +368,20 @@ bool delete_course(Student *student_head, Course **&course_array,
       break;
     }
   }
-  if(to_delete == nullptr)
+  if(to_delete == nullptr)//Case of the to_delete pointer remains unchanged(course not found)
   {
     cout << "Failed to delete course, course " << course_id << " not found." << endl;
     return false;
   }
-  //Delet the course review
-  if(to_delete -> star_rank_head != nullptr)
+  //Delete the course review
+  if(to_delete -> star_rank_head != nullptr)//Special case for the course that has no review
   {
-    clear_star_rank(to_delete -> star_rank_head);
+    clear_star_rank(to_delete -> star_rank_head);//Clear the course review using the additional helper function
   }
   delete to_delete;
-  to_delete = nullptr;
-  int count = 0;
+  to_delete = nullptr;//Reset the deleted course to a null pointer to a null pointer
   //Count course
+  int count = 0;
   for(int index = 0;index < num_courses;index++)
   {
     if(course_array[index] != nullptr)
@@ -374,19 +389,23 @@ bool delete_course(Student *student_head, Course **&course_array,
       count ++;
     }
   }
-  if(count > num_courses / 2 && num_courses > 2)
+  //Reduce course size if needed
+  if(count <= num_courses / 2 && num_courses > 2)
   {
     num_courses /= 2;
     cout << "reduce course array size to " << num_courses << endl;
   }
-  Course **replace = dynamic_init_course_array(num_courses);
-  for(int index = 0;replace[index] != nullptr && index <num_courses;index++)
+  Course **replace = dynamic_init_course_array(num_courses);//The updated course array to replace the course array
+  //Copy the pointer from the former array to the updated array
+  int phase = 0;//The shift phase if there is a nullptr in the course_array
+  for(int index = 0;index < num_courses;index++)
   {
-    replace[index] = course_array[index]; 
+    if(course_array[index] == nullptr)phase = 1;//Add the phase if the deleted course is the middle of the array
+    replace[index] = course_array[index + phase]; 
   }
+  //Dele the former course array
   delete [] course_array;
   course_array = replace;
-  replace = nullptr;
   return true;
 }
 
@@ -465,14 +484,12 @@ void display_star_ranks(Course **course_array, const unsigned int num_courses,
     return;
   }
   StarRank *star_rank = course_array[course_index] -> star_rank_head;
-  StarRank *next_rank = nullptr;
   cout << "star_ranks in course "<<course_array[course_index] -> name<<" : ";
-  for(;star_rank != nullptr;star_rank = next_rank)
+  for(;star_rank != nullptr;star_rank = star_rank -> next)
   {
-    next_rank = star_rank -> next;
     cout << "[" << star_rank -> student -> sid<<": "
     << star_rank -> star << "]";
-    if(next_rank != nullptr)cout << " -> ";
+    if(star_rank -> next != nullptr)cout << " -> ";
   }
   cout << endl;
 }
