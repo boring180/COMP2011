@@ -54,5 +54,3 @@ course_id : 1, name : History, stars_count :
 8: Delete a course by course id
 9: Exit the system
 Enter your option: 
-1
-1

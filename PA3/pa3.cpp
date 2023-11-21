@@ -273,8 +273,8 @@ bool add_student(Student *&student_head, const unsigned int sid,
   // TODO: Write code to implement add_student
   //Create the nodes
   Student *toadd = create_student(sid,name);
-  Student *grat = nullptr;
   Student *prev = nullptr;
+  Student *curr = nullptr;
   //Special case: The ll is empty
   if(student_head == nullptr)
   {
@@ -282,15 +282,14 @@ bool add_student(Student *&student_head, const unsigned int sid,
     return true;
   }
   //Special case: The student already exist
-  if(search_student(student_head,sid,prev,grat))return false;
+  if(search_student(student_head,sid,prev,curr))return false;
   //General case
-  for(prev = student_head;prev -> next != nullptr;prev = grat)
+  for(prev = student_head;prev -> next != nullptr;prev = prev -> next)
   {
-    grat =  prev -> next;
-    if(prev -> sid < toadd -> sid && toadd -> sid < grat -> sid)break;//Find the space between the next and the previous studnet
+    if(prev -> sid < toadd -> sid && toadd -> sid < prev -> next -> sid)break;//Find the space between the next and the previous studnet
   }
+  toadd -> next = prev -> next; // The toadd student points to the next pointer
   prev -> next = toadd; // The previous student points to the student to add
-  toadd -> next = grat; // The toadd student points to the next pointer
   return true;
   }
 
@@ -327,9 +326,17 @@ bool delete_star_rank(Student *&student_head, Course **&course_array,
   }
   //Decrease the star count
   currsta -> student -> ranks_count --;
-  course_array[course_index] -> stars_count[currsta -> star] --;
+  course_array[course_index] -> stars_count[currsta -> star - 1] --;
+  //Relink
+  if(prevsta == nullptr)  //Special case: The rank to delete is the head
+  {
+    course_array[course_index] -> star_rank_head =  currsta -> next;
+  }
+  else  //General case
+  {
+    prevsta -> next = currsta -> next;
+  }
   //Delet the starrank
-  prevsta -> next = currsta -> next;//Relink
   delete currsta;
   return true;
 }
@@ -358,31 +365,34 @@ bool delete_star_rank(Student *&student_head, Course **&course_array,
 bool delete_course(Student *student_head, Course **&course_array,
                    const unsigned int course_id, unsigned int &num_courses) {
   // TODO: Write code to implement delete_course
-  //Special case: Course does not exist
-  Course *to_delete = nullptr;
-  for(int index = 0;index < num_courses;index++)
-  {
-    if(course_array[index] -> course_id == course_id)
-    {
-      to_delete = course_array[index];
-      break;
-    }
-  }
-  if(to_delete == nullptr)//Case of the to_delete pointer remains unchanged(course not found)
+    //Check if the course array is empty
+  if(course_array[0] == nullptr)
   {
     cout << "Failed to delete course, course " << course_id << " not found." << endl;
     return false;
   }
-  //Delete the course review
-  if(to_delete -> star_rank_head != nullptr)//Special case for the course that has no review
+  //Special case: Course does not exist
+  int index;
+  for(index = 0;course_array[index] -> course_id != course_id;index++)
   {
-    clear_star_rank(to_delete -> star_rank_head);//Clear the course review using the additional helper function
+    //Case of course not found
+    if(index >= num_courses)
+    {
+      cout << "Failed to delete course, course " << course_id << " not found." << endl;
+      return false;
+    }
   }
-  delete to_delete;
-  to_delete = nullptr;//Reset the deleted course to a null pointer to a null pointer
+  //Once the course to delete is found, Delete the course review
+  if(course_array[index] -> star_rank_head != nullptr)//Special case for the course that has no review
+  {
+    clear_star_rank(course_array[index] -> star_rank_head);//Clear the course review using the additional helper function
+  }
+  //Delete the course and set the pointer to a null pointer
+  delete course_array[index];
+  course_array[index] = nullptr;
   //Count course
   int count = 0;
-  for(int index = 0;index < num_courses;index++)
+  for(index = 0;index < num_courses;index++)
   {
     if(course_array[index] != nullptr)
     {
@@ -390,6 +400,7 @@ bool delete_course(Student *student_head, Course **&course_array,
     }
   }
   //Reduce course size if needed
+  int old_num = num_courses;
   if(count <= num_courses / 2 && num_courses > 2)
   {
     num_courses /= 2;
@@ -397,15 +408,17 @@ bool delete_course(Student *student_head, Course **&course_array,
   }
   Course **replace = dynamic_init_course_array(num_courses);//The updated course array to replace the course array
   //Copy the pointer from the former array to the updated array
-  int phase = 0;//The shift phase if there is a nullptr in the course_array
-  for(int index = 0;index < num_courses;index++)
+  int updated_index = 0;
+  for(index = 0;updated_index < num_courses && index < old_num;index++)
   {
-    if(course_array[index] == nullptr)phase = 1;//Add the phase if the deleted course is the middle of the array
-    replace[index] = course_array[index + phase]; 
+    if(course_array[index] != nullptr)
+    {
+      replace[updated_index] = course_array[index];
+      updated_index++;
+    }
   }
-  //Dele the former course array
-  delete [] course_array;
-  course_array = replace;
+  delete [] course_array;   //Delete the former course array
+  course_array = replace;   //Update the course array
   return true;
 }
 
@@ -416,7 +429,6 @@ void clean_up(Student *&student_head, StarRank *&star_rank_head,
     delete_course(student_head, course_array, course_array[0]->course_id,
                   num_courses);
   }
-
   if (student_head != nullptr) {
     Student *student;
     while (student_head->next != nullptr) {
@@ -480,7 +492,7 @@ void display_star_ranks(Course **course_array, const unsigned int num_courses,
   }
   if(course_array[course_index] -> star_rank_head == nullptr)
   {
-    cout << "No StarRanks in the course " << course_array[course_index] -> name << endl;
+    cout <<"star_ranks in course "<<course_array[course_index] -> name<<" : No StarRanks in the course " << course_array[course_index] -> name << endl;
     return;
   }
   StarRank *star_rank = course_array[course_index] -> star_rank_head;

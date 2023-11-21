@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/xuborong/Library/CloudStorage/OneDrive-HKUSTConnect/Y2F/COMP 2011/COMP2011/Lab/lab5",
-      "program": "/Users/xuborong/Library/CloudStorage/OneDrive-HKUSTConnect/Y2F/COMP 2011/COMP2011/Lab/lab5/build/Debug/outDebug"
+      "cwd": ".",
+      "program": "build/Debug/outDebug"
     }
   ]
 }
