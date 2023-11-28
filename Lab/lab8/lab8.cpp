@@ -107,6 +107,7 @@ private:
     void remove(LinkNode *node)
     {
         if(node == nullptr)return;
+        if(head == nullptr)return;
         if(node == head)
         {   
             if(node->getNext() == nullptr)
