@@ -182,11 +182,11 @@ bool add_course(Course **&course_array, const unsigned int course_id,
   {
     num_courses *= 2;
     Course **updated_course_array=dynamic_init_course_array(num_courses);//Create a new course array
-    for(int i = 0;course_array[i] != nullptr;i++)//Fill the previous course array into the new course array
+    for(int i = 0; i < num_courses / 2 && course_array[i] != nullptr ;i++)//Fill the previous course array into the new course array
     {
       updated_course_array[i] = course_array[i];
     }
-    delete course_array;
+    delete [] course_array;
     course_array = updated_course_array;
     cout << "increase course array size to " << num_courses << endl;
   }
@@ -255,7 +255,7 @@ bool add_star_rank(Student *&student_head, unsigned int sid,
   //General case
   else
   {
-    for(;newsta -> next != nullptr;newsta = newsta -> next);
+    for(;search->next != nullptr;search = search -> next);
     search -> next = newsta;
   }
   //Increase the star count of the course and the student
@@ -282,7 +282,11 @@ bool add_student(Student *&student_head, const unsigned int sid,
     return true;
   }
   //Special case: The student already exist
-  if(search_student(student_head,sid,prev,curr))return false;
+  if(search_student(student_head,sid,prev,curr))
+  {
+    delete toadd;
+    return false;
+  }
   //General case
   for(prev = student_head;prev -> next != nullptr;prev = prev -> next)
   {
@@ -523,7 +527,7 @@ void display_courses(Course **course_array, const unsigned int num_courses) {
     cout << "No course in the list " << endl;
     return;
   }
-  for(int i = 0;course_array[i] != nullptr && i < num_courses;i++)
+  for(int i = 0;i < num_courses && course_array[i] != nullptr;i++)
   {
     cout<<"course_id : "<<course_array[i]->course_id<<", name : "<<course_array[i]->name<<", stars_count : "<<endl;
     cout<<"*     "<<course_array[i]->stars_count[0]<<endl;
