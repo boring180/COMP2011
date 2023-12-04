@@ -287,6 +287,19 @@ bool add_student(Student *&student_head, const unsigned int sid,
     delete toadd;
     return false;
   }
+  /////////////
+  /*
+  The points excluded
+  */
+ /////////////
+  //Specical case: The student to add SID is smaller than the previous head
+  if(toadd->sid < student_head->sid)
+  {
+    toadd->next = student_head;
+    student_head = toadd;
+  }
+  else
+  {
   //General case
   for(prev = student_head;prev -> next != nullptr;prev = prev -> next)
   {
@@ -294,6 +307,7 @@ bool add_student(Student *&student_head, const unsigned int sid,
   }
   toadd -> next = prev -> next; // The toadd student points to the next pointer
   prev -> next = toadd; // The previous student points to the student to add
+  }
   return true;
   }
 
