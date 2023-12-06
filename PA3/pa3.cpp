@@ -383,22 +383,18 @@ bool delete_star_rank(Student *&student_head, Course **&course_array,
 bool delete_course(Student *student_head, Course **&course_array,
                    const unsigned int course_id, unsigned int &num_courses) {
   // TODO: Write code to implement delete_course
-    //Check if the course array is empty
-  if(course_array[0] == nullptr)
-  {
-    cout << "Failed to delete course, course " << course_id << " not found." << endl;
-    return false;
-  }
+
   //Special case: Course does not exist
-  int index;
-  for(index = 0;course_array[index] -> course_id != course_id;index++)
+  int index = 0;
+  for(;;index++)
   {
-    //Case of course not found
-    if(index >= num_courses)
+    //Check if the course array is empty
+    if(course_array[index] == nullptr)
     {
       cout << "Failed to delete course, course " << course_id << " not found." << endl;
       return false;
     }
+    if(course_array[index]->course_id == course_id)break;
   }
   //Once the course to delete is found, Delete the course review
   if(course_array[index] -> star_rank_head != nullptr)//Special case for the course that has no review

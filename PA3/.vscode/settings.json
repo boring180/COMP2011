@@ -39,7 +39,7 @@
   ],
   "C_Cpp_Runner.useAddressSanitizer": false,
   "workbench.preferredDarkColorTheme": "Default High Contrast",
-  "workbench.colorTheme": "Default High Contrast Light",
+  "workbench.colorTheme": "Default High Contrast",
   "workbench.preferredLightColorTheme": "Default High Contrast Light",
   "C_Cpp.errorSquiggles": "enabled",
   "C_Cpp_Runner.msvcWarnings": [
