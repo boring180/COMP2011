@@ -1,2 +1,3 @@
 # COMP2011
-Lab in-clas code and PA
+Lab, in-class code and PA for COMP 2011 Programming with C++, HKUST
+Final grade: A
